@@ -1,0 +1,14 @@
+{
+  "author": "Geoffrey Hutchison",
+  "version": 1.0,
+  "url": "https://github.com/ghutchis/avogadro-rdkit",
+  "name": "avogadro-rdkit",
+  "description": "Scripts using RDKit Python interface",
+  "type": "commands",
+  "commands": [
+    { "name": "ETKDG", "command": "etkdg.py" },
+    { "name": "UFF", "command": "uff.py" },
+    { "name": "MMFF94", "command": "mmff94.py" },
+    { "name": "Tautomer", "command": "tautomer.py" }
+  ]
+}
