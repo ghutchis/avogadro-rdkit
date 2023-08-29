@@ -38,9 +38,9 @@ def generate(opts):
     m = Chem.AddHs(m)
     AllChem.EmbedMolecule(m, AllChem.ETKDGv3())
 
-    if opts['ff'] is 'UFF':
+    if opts['ff'] == 'UFF':
         AllChem.UFFOptimizeMolecule(m)
-    elif opts['ff'] is 'MMFF94':
+    elif opts['ff'] == 'MMFF94':
         AllChem.MMFFOptimizeMolecule(m)
 
     return Chem.MolToMolBlock(m)
