@@ -11,43 +11,34 @@ import json
 import sys
 
 from rdkit import Chem
-from rdkit.Chem import AllChem
-
-# check to see what version of ETKDG to use
 
 # Some globals:
 debug = True
 
-
 def getOptions():
-    userOptions = {}
-
-    userOptions['ff'] = {}
-    userOptions['ff']['type'] = 'stringList'
-    userOptions['ff']['label'] = 'Force Field'
-    userOptions['ff']['default'] = 2
-    userOptions['ff']['values'] = ['None', 'MMFF94', 'UFF']
-    userOptions['ff']['toolTip'] = 'Optional force field optimization'
-
-    opts = {'userOptions': userOptions }
+    opts = {'userOptions': {} }
     opts['inputMoleculeFormat'] = 'sdf'
 
     return opts
 
 
 def generate(opts):
-    m = Chem.MolFromMolBlock(opts['sdf'])
-    # probably should be an option
-    m = Chem.AddHs(m)
-    # should check what version of ETDKG to use
-    AllChem.EmbedMolecule(m, AllChem.ETKDGv3())
+    cjson = opts['cjson']
 
-    if opts['ff'] == 'UFF':
-        AllChem.UFFOptimizeMolecule(m)
-    elif opts['ff'] == 'MMFF94':
-        AllChem.MMFFOptimizeMolecule(m)
+    # get the labels from RDKit    
+    mol = Chem.MolFromMolBlock(opts['sdf'])
 
-    return Chem.MolToMolBlock(m)
+    # this might be empty, so expand as needed
+    atomLabels = cjson['atoms']['labels']
+    if len(atomLabels) < mol.GetNumAtoms():
+        atomLabels = list(str('') * mol.GetNumAtoms())
+
+    centers = Chem.FindMolChiralCenters(mol)
+    # add them to the CJSON
+    for id, label in centers:
+        atomLabels[id] = f"({label})"
+
+    return cjson
 
 
 def runCommand():
@@ -57,14 +48,14 @@ def runCommand():
     # Parse the JSON strings
     opts = json.loads(stdinStr)
 
-    # Replace this molecule with a new conformer in SDF
+    # Replace this molecule with the new labels
     result = {}
-    result['moleculeFormat'] = 'sdf'
-    result['sdf'] = generate(opts)
+    result['moleculeFormat'] = 'cjson'
+    result['cjson'] = generate(opts)
     return result
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser('RDKit ETKDG')
+    parser = argparse.ArgumentParser('RDKit Assign Stereo')
     parser.add_argument('--debug', action='store_true')
     parser.add_argument('--print-options', action='store_true')
     parser.add_argument('--run-command', action='store_true')
@@ -76,7 +67,7 @@ if __name__ == "__main__":
     debug = args['debug']
 
     if args['display_name']:
-        print("Generate Conformer...")
+        print("Assign Stereo Labels")
     if args['menu_path']:
         print("&Extensions|RDKit")
     if args['print_options']:

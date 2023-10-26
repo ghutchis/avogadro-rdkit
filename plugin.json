@@ -6,9 +6,13 @@
   "description": "Scripts using RDKit Python interface",
   "type": "commands",
   "commands": [
+    { "name": "Assign Stereochemistry", "command": "assign-stereo.py" },
+    { "name": "Canonical Conformer", "command": "canon-conf.py" },
     { "name": "ETKDG", "command": "etkdg.py" },
-    { "name": "UFF", "command": "uff.py" },
     { "name": "MMFF94", "command": "mmff94.py" },
-    { "name": "Tautomer", "command": "tautomer.py" }
+    { "name": "Standardize", "command": "standardize.py" },
+    { "name": "Select SMARTS", "command": "select-smarts.py" },
+    { "name": "Tautomer", "command": "tautomer.py" },
+    { "name": "UFF", "command": "uff.py" }
   ]
 }

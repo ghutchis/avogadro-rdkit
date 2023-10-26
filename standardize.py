@@ -1,35 +1,18 @@
-"""
-/******************************************************************************
-  This source file is part of the Avogadro project.
-
-  This source code is released under the New BSD License, (the "License").
-******************************************************************************/
-"""
+#  This source file is part of the Avogadro project
+#  This source code is released under the 3-Clause BSD License, (see "LICENSE").
+#  https://github.com/ghutchis/avogadro-rdkit/
 
 import argparse
 import json
 import sys
 
 from rdkit import Chem
+from rdkit.Chem.MolStandardize import Standardizer
 from rdkit.Chem import AllChem
-
-# check to see what version of ETKDG to use
-
-# Some globals:
-debug = True
 
 
 def getOptions():
-    userOptions = {}
-
-    userOptions['ff'] = {}
-    userOptions['ff']['type'] = 'stringList'
-    userOptions['ff']['label'] = 'Force Field'
-    userOptions['ff']['default'] = 2
-    userOptions['ff']['values'] = ['None', 'MMFF94', 'UFF']
-    userOptions['ff']['toolTip'] = 'Optional force field optimization'
-
-    opts = {'userOptions': userOptions }
+    opts = { }
     opts['inputMoleculeFormat'] = 'sdf'
 
     return opts
@@ -37,15 +20,11 @@ def getOptions():
 
 def generate(opts):
     m = Chem.MolFromMolBlock(opts['sdf'])
-    # probably should be an option
-    m = Chem.AddHs(m)
-    # should check what version of ETDKG to use
-    AllChem.EmbedMolecule(m, AllChem.ETKDGv3())
 
-    if opts['ff'] == 'UFF':
-        AllChem.UFFOptimizeMolecule(m)
-    elif opts['ff'] == 'MMFF94':
-        AllChem.MMFFOptimizeMolecule(m)
+    s = Standardizer()
+    canon = s.standardize(m)
+    m = Chem.AddHs(canon)
+    AllChem.EmbedMolecule(m, AllChem.ETKDGv3())
 
     return Chem.MolToMolBlock(m)
 
@@ -64,7 +43,7 @@ def runCommand():
     return result
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser('RDKit ETKDG')
+    parser = argparse.ArgumentParser('RDKit Standardize')
     parser.add_argument('--debug', action='store_true')
     parser.add_argument('--print-options', action='store_true')
     parser.add_argument('--run-command', action='store_true')
@@ -76,7 +55,7 @@ if __name__ == "__main__":
     debug = args['debug']
 
     if args['display_name']:
-        print("Generate Conformer...")
+        print("Standardize")
     if args['menu_path']:
         print("&Extensions|RDKit")
     if args['print_options']:

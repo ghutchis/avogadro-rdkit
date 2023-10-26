@@ -13,41 +13,23 @@ import sys
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
-# check to see what version of ETKDG to use
-
 # Some globals:
 debug = True
 
 
 def getOptions():
-    userOptions = {}
-
-    userOptions['ff'] = {}
-    userOptions['ff']['type'] = 'stringList'
-    userOptions['ff']['label'] = 'Force Field'
-    userOptions['ff']['default'] = 2
-    userOptions['ff']['values'] = ['None', 'MMFF94', 'UFF']
-    userOptions['ff']['toolTip'] = 'Optional force field optimization'
+    userOptions = {
+        'SMARTS': {
+            'type': 'string',
+            'label': 'SMARTS Pattern',
+            'default': 'a'
+        }
+    }
 
     opts = {'userOptions': userOptions }
     opts['inputMoleculeFormat'] = 'sdf'
 
     return opts
-
-
-def generate(opts):
-    m = Chem.MolFromMolBlock(opts['sdf'])
-    # probably should be an option
-    m = Chem.AddHs(m)
-    # should check what version of ETDKG to use
-    AllChem.EmbedMolecule(m, AllChem.ETKDGv3())
-
-    if opts['ff'] == 'UFF':
-        AllChem.UFFOptimizeMolecule(m)
-    elif opts['ff'] == 'MMFF94':
-        AllChem.MMFFOptimizeMolecule(m)
-
-    return Chem.MolToMolBlock(m)
 
 
 def runCommand():
@@ -56,15 +38,22 @@ def runCommand():
 
     # Parse the JSON strings
     opts = json.loads(stdinStr)
+    mol = Chem.MolFromMolBlock(opts['sdf'])
+    smarts = Chem.MolFromSmarts(opts['SMARTS'])
+    selected = []
+    for match in mol.GetSubstructMatches(smarts):
+        for atom in match:
+            selected.append(atom)
 
-    # Replace this molecule with a new conformer in SDF
-    result = {}
-    result['moleculeFormat'] = 'sdf'
-    result['sdf'] = generate(opts)
+    # Just indicate that we want to select matching atoms
+    result = {
+        'selectedAtoms': selected,
+        'append': True
+    }
     return result
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser('RDKit ETKDG')
+    parser = argparse.ArgumentParser('RDKit Select SMARTS Matches')
     parser.add_argument('--debug', action='store_true')
     parser.add_argument('--print-options', action='store_true')
     parser.add_argument('--run-command', action='store_true')
@@ -76,9 +65,9 @@ if __name__ == "__main__":
     debug = args['debug']
 
     if args['display_name']:
-        print("Generate Conformer...")
+        print("Select by SMARTS Matches…")
     if args['menu_path']:
-        print("&Extensions|RDKit")
+        print("&Select")
     if args['print_options']:
         print(json.dumps(getOptions()))
     elif args['run_command']:
