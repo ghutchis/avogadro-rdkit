@@ -1,0 +1,7 @@
+{
+  "SMARTS": {
+    "type": "string",
+    "label": "SMARTS Pattern",
+    "default": "a"
+  }
+}

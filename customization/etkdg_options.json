@@ -1,0 +1,9 @@
+{
+  "ff": {
+    "type": "stringList",
+    "label": "Force Field",
+    "default": 2,
+    "values": ["None", "MMFF94", "UFF"],
+    "toolTip": "Optional force field optimization after embedding"
+  }
+}

@@ -1,0 +1,116 @@
+[project]
+name = "avogadro-rdkit"
+version = "0.1.0"
+description = "RDKit-based plugins for Avogadro 2"
+authors = [{name = "Geoff Hutchison", email = "geoff.hutchison@gmail.com"}]
+license = "BSD-3-Clause"
+requires-python = ">=3.11"
+dependencies = ["rdkit>=2023.3.2"]
+
+[project.scripts]
+avogadro-rdkit = "avogadro_rdkit:main"
+
+[build-system]
+requires = ["uv_build>=0.10.2,<0.11.0"]
+build-backend = "uv_build"
+
+[tool.avogadro]
+minimum-avogadro-version = "1.103"
+
+[[tool.avogadro.menu-commands]]
+identifier = "assign-stereo"
+input-format = "sdf"
+input-cjson = true
+
+[tool.avogadro.menu-commands.path]
+menu = "Extensions"
+submenu.label = "RDKit"
+submenu.priority = 900
+item.label = "Assign Stereochemistry"
+item.priority = 100
+
+[[tool.avogadro.menu-commands]]
+identifier = "canon-conf"
+input-format = "sdf"
+
+[tool.avogadro.menu-commands.path]
+menu = "Extensions"
+submenu.label = "RDKit"
+submenu.priority = 900
+item.label = "Standard Frame of Reference"
+item.priority = 200
+
+[[tool.avogadro.menu-commands]]
+identifier = "etkdg"
+input-format = "sdf"
+user-options = "customization/etkdg_options.json"
+
+[tool.avogadro.menu-commands.path]
+menu = "Extensions"
+submenu.label = "RDKit"
+submenu.priority = 900
+item.label = "ETKDG Conformer…"
+item.priority = 300
+
+[[tool.avogadro.menu-commands]]
+identifier = "mmff94"
+input-format = "sdf"
+
+[tool.avogadro.menu-commands.path]
+menu = "Extensions"
+submenu.label = "RDKit"
+submenu.priority = 900
+item.label = "MMFF94 Optimize"
+item.priority = 400
+
+[[tool.avogadro.menu-commands]]
+identifier = "standardize"
+input-format = "sdf"
+
+[tool.avogadro.menu-commands.path]
+menu = "Extensions"
+submenu.label = "RDKit"
+submenu.priority = 900
+item.label = "Standardize"
+item.priority = 500
+
+[[tool.avogadro.menu-commands]]
+identifier = "tautomer"
+input-format = "sdf"
+
+[tool.avogadro.menu-commands.path]
+menu = "Extensions"
+submenu.label = "RDKit"
+submenu.priority = 900
+item.label = "Canonical Tautomer"
+item.priority = 600
+
+[[tool.avogadro.menu-commands]]
+identifier = "uff"
+input-format = "sdf"
+
+[tool.avogadro.menu-commands.path]
+menu = "Extensions"
+submenu.label = "RDKit"
+submenu.priority = 900
+item.label = "UFF Optimize"
+item.priority = 700
+
+[[tool.avogadro.menu-commands]]
+identifier = "select-smarts"
+input-format = "sdf"
+user-options = "customization/smarts_options.json"
+
+[tool.avogadro.menu-commands.path]
+menu = "Select"
+item.label = "Select by SMARTS…"
+item.priority = 500
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["osx-arm64"]
+
+[tool.pixi.pypi-dependencies]
+avogadro-rdkit = { path = ".", editable = true }
+
+[tool.pixi.tasks]
