@@ -9,9 +9,9 @@ from rdkit import Chem
 
 def select_smarts(avo_input: dict) -> dict:
     """Select atoms matching a SMARTS pattern."""
-    mol = Chem.MolFromMolBlock(avo_input["sdf"])
-    smarts_str = avo_input.get("options", {}).get("SMARTS", "a")
-    smarts = Chem.MolFromSmarts(smarts_str)
+    mol = Chem.MolFromMolBlock(avo_input["sdf"], removeHs=False, sanitize=False)
+    smarts_string = avo_input.get("options", {}).get("SMARTS", "a")
+    smarts = Chem.MolFromSmarts(smarts_string)
 
     selected = []
     for match in mol.GetSubstructMatches(smarts):
