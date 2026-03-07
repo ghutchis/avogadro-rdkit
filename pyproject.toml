@@ -21,87 +21,64 @@ minimum-avogadro-version = "1.103"
 identifier = "assign-stereo"
 input-format = "sdf"
 input-cjson = true
-
-[tool.avogadro.menu-commands.path]
 menu = "Extensions"
-submenu.label = "RDKit"
-submenu.priority = 900
-item.label = "Assign Stereochemistry"
-item.priority = 100
+submenu = "RDKit"
+item = "Assign Stereochemistry"
+menu-priorities = [ 900, 100 ]
 
 [[tool.avogadro.menu-commands]]
 identifier = "canon-conf"
 input-format = "sdf"
-
-[tool.avogadro.menu-commands.path]
 menu = "Extensions"
-submenu.label = "RDKit"
-submenu.priority = 900
-item.label = "Standard Frame of Reference"
-item.priority = 200
+submenu = "RDKit"
+item = "Standard Frame of Reference"
+menu-priorities = [ 900, 200 ]
 
 [[tool.avogadro.menu-commands]]
 identifier = "etkdg"
 input-format = "sdf"
 user-options = "customization/etkdg_options.json"
-
-[tool.avogadro.menu-commands.path]
 menu = "Extensions"
-submenu.label = "RDKit"
-submenu.priority = 900
-item.label = "ETKDG Conformer…"
-item.priority = 300
+submenu = "RDKit"
+item = "ETKDG Conformer…"
+menu-priorities = [ 900, 300 ]
 
 [[tool.avogadro.menu-commands]]
 identifier = "mmff94"
 input-format = "sdf"
-
-[tool.avogadro.menu-commands.path]
 menu = "Extensions"
-submenu.label = "RDKit"
-submenu.priority = 900
-item.label = "MMFF94 Optimize"
-item.priority = 400
+submenu = "RDKit"
+item = "MMFF94 Optimize"
+menu-priorities = [ 900, 400 ]
 
 [[tool.avogadro.menu-commands]]
 identifier = "standardize"
 input-format = "sdf"
-
-[tool.avogadro.menu-commands.path]
 menu = "Extensions"
-submenu.label = "RDKit"
-submenu.priority = 900
-item.label = "Standardize"
-item.priority = 500
+submenu = "RDKit"
+item = "Standardize"
+menu-priorities = [ 900, 500 ]
 
 [[tool.avogadro.menu-commands]]
 identifier = "tautomer"
 input-format = "sdf"
-
-[tool.avogadro.menu-commands.path]
 menu = "Extensions"
-submenu.label = "RDKit"
-submenu.priority = 900
-item.label = "Canonical Tautomer"
-item.priority = 600
+submenu = "RDKit"
+item = "Canonical Tautomer"
+menu-priorities = [ 900, 600 ]
 
 [[tool.avogadro.menu-commands]]
 identifier = "uff"
 input-format = "sdf"
-
-[tool.avogadro.menu-commands.path]
 menu = "Extensions"
-submenu.label = "RDKit"
-submenu.priority = 900
-item.label = "UFF Optimize"
-item.priority = 700
+submenu = "RDKit"
+item = "UFF Optimize"
+menu-priorities = [ 900, 700 ]
 
 [[tool.avogadro.menu-commands]]
 identifier = "select-smarts"
 input-format = "sdf"
 user-options = "customization/smarts_options.json"
-
-[tool.avogadro.menu-commands.path]
 menu = "Select"
-item.label = "Select by SMARTS…"
-item.priority = 500
+item = "Select by SMARTS…"
+menu-priorities = [ 500 ]
