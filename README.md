@@ -4,14 +4,10 @@ Avogadro plugin scripts using RDKit:
 - generate a conformer with ETKDG
 - optimize with MMFF94 or UFF
 - generate a canonical tautomer
+- select by SMARTS
+- add stereo labels for chiral atoms
 
 More to come...
-
-## Installation
-
-Requires RDKit to be installed in your Python environment.
-
-[Install Instructions](https://github.com/rdkit/rdkit/blob/master/Docs/Book/Install.md)
 
 ## Suggestions
 

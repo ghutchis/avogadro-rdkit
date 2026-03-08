@@ -7,7 +7,7 @@
 import rdkit.Chem.rdMolTransforms
 from rdkit import Chem
 from rdkit.Chem import AllChem
-from rdkit.Chem.MolStandardize import Standardizer, rdMolStandardize
+from rdkit.Chem.MolStandardize import rdMolStandardize
 
 
 def canon_conf(avo_input: dict) -> dict:
@@ -31,8 +31,7 @@ def tautomer(avo_input: dict) -> dict:
 def standardize(avo_input: dict) -> dict:
     """Standardize molecule and generate a new 3D conformer."""
     m = Chem.MolFromMolBlock(avo_input["sdf"])
-    s = Standardizer()
-    canon = s.standardize(m)
+    canon = rdMolStandardize.Normalize(m)
     m = Chem.AddHs(canon)
     AllChem.EmbedMolecule(m, AllChem.ETKDGv3())
     return {"moleculeFormat": "sdf", "sdf": Chem.MolToMolBlock(m)}
