@@ -40,13 +40,14 @@ def standardize(avo_input: dict) -> dict:
 def assign_stereo(avo_input: dict) -> dict:
     """Assign stereochemistry labels (R/S) to chiral centers in the CJSON."""
     cjson = avo_input["cjson"]
-    mol = Chem.MolFromMolBlock(avo_input["sdf"])
+    mol = Chem.MolFromMolBlock(avo_input["sdf"], removeHs=False)
+    Chem.AssignStereochemistryFrom3D(mol)
 
     atom_labels = cjson["atoms"].get("labels", [])
     if len(atom_labels) < mol.GetNumAtoms():
         atom_labels = [""] * mol.GetNumAtoms()
 
-    centers = Chem.FindMolChiralCenters(mol)
+    centers = Chem.FindMolChiralCenters(mol, useLegacyImplementation=False)
     for atom_id, label in centers:
         atom_labels[atom_id] = f"({label})"
 

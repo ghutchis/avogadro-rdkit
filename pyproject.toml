@@ -1,6 +1,6 @@
 [project]
 name = "avogadro-rdkit"
-version = "0.1.0"
+version = "0.1.1"
 description = "RDKit-based plugins for Avogadro 2"
 authors = [{name = "Geoff Hutchison", email = "geoff.hutchison@gmail.com"}]
 license = "BSD-3-Clause"
@@ -18,21 +18,36 @@ build-backend = "uv_build"
 minimum-avogadro-version = "1.103"
 
 [[tool.avogadro.menu-commands]]
-identifier = "assign-stereo"
+identifier = "standardize"
 input-format = "sdf"
-input-cjson = true
 menu = "Extensions"
 submenu = "RDKit"
-item = "Assign Stereochemistry"
-menu-priorities = [ 900, 100 ]
+item = "Standardize"
+menu-priorities = [ 900, 750 ]
 
 [[tool.avogadro.menu-commands]]
-identifier = "canon-conf"
+identifier = "tautomer"
 input-format = "sdf"
 menu = "Extensions"
 submenu = "RDKit"
-item = "Standard Frame of Reference"
-menu-priorities = [ 900, 200 ]
+item = "Canonical Tautomer"
+menu-priorities = [ 900, 700 ]
+
+[[tool.avogadro.menu-commands]]
+identifier = "mmff94"
+input-format = "sdf"
+menu = "Extensions"
+submenu = "RDKit"
+item = "MMFF94 Optimize"
+menu-priorities = [ 900, 550 ]
+
+[[tool.avogadro.menu-commands]]
+identifier = "uff"
+input-format = "sdf"
+menu = "Extensions"
+submenu = "RDKit"
+item = "UFF Optimize"
+menu-priorities = [ 900, 540 ]
 
 [[tool.avogadro.menu-commands]]
 identifier = "etkdg"
@@ -41,39 +56,16 @@ user-options = "customization/etkdg_options.json"
 menu = "Extensions"
 submenu = "RDKit"
 item = "ETKDG Conformer…"
+menu-priorities = [ 900, 530 ]
+
+[[tool.avogadro.menu-commands]]
+identifier = "assign-stereo"
+input-format = "sdf"
+input-cjson = true
+menu = "Extensions"
+submenu = "RDKit"
+item = "Assign Stereochemistry"
 menu-priorities = [ 900, 300 ]
-
-[[tool.avogadro.menu-commands]]
-identifier = "mmff94"
-input-format = "sdf"
-menu = "Extensions"
-submenu = "RDKit"
-item = "MMFF94 Optimize"
-menu-priorities = [ 900, 400 ]
-
-[[tool.avogadro.menu-commands]]
-identifier = "standardize"
-input-format = "sdf"
-menu = "Extensions"
-submenu = "RDKit"
-item = "Standardize"
-menu-priorities = [ 900, 500 ]
-
-[[tool.avogadro.menu-commands]]
-identifier = "tautomer"
-input-format = "sdf"
-menu = "Extensions"
-submenu = "RDKit"
-item = "Canonical Tautomer"
-menu-priorities = [ 900, 600 ]
-
-[[tool.avogadro.menu-commands]]
-identifier = "uff"
-input-format = "sdf"
-menu = "Extensions"
-submenu = "RDKit"
-item = "UFF Optimize"
-menu-priorities = [ 900, 700 ]
 
 [[tool.avogadro.menu-commands]]
 identifier = "select-smarts"
