@@ -75,6 +75,15 @@ menu = "Select"
 item = "Select by SMARTS…"
 menu-priorities = [ 500 ]
 
+[[tool.avogadro.menu-commands]]
+identifier = "insert-smiles"
+input-format = "sdf"
+user-options = "customization/smiles_options.json"
+menu = "Build"
+submenu = "Insert"
+item = "SMILES (RDKit)…"
+menu-priorities = [ 500 ]
+
 [tool.pixi.workspace]
 channels = ["conda-forge"]
 platforms = ["win-64", "linux-64", "osx-arm64"]

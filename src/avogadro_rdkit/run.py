@@ -16,6 +16,9 @@ def run(args):
         case "etkdg":
             from .conformers import etkdg
             output = etkdg(avo_input)
+        case "insert-smiles":
+            from .conformers import insert_smiles
+            output = insert_smiles(avo_input)
         case "mmff94":
             from .conformers import mmff94
             output = mmff94(avo_input)
