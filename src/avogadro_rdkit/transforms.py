@@ -49,7 +49,23 @@ def assign_stereo(avo_input: dict) -> dict:
 
     centers = Chem.FindMolChiralCenters(mol, useLegacyImplementation=False)
     for atom_id, label in centers:
+        # remove parens to just show R/S
+        label.replace("(", "").replace(")", "")
         atom_labels[atom_id] = f"({label})"
 
     cjson["atoms"]["labels"] = atom_labels
+
+    # add E / Z for double bonds too
+    bond_labels = cjson["bonds"].get("labels", [])
+    if len(bond_labels) < mol.GetNumBonds():
+        bond_labels = [""] * mol.GetNumBonds()
+
+    for bond in mol.GetBonds():
+        if bond.GetStereo() == Chem.BondStereo.STEREOE:
+            bond_labels[bond.GetIdx()] = "E"
+        elif bond.GetStereo() == Chem.BondStereo.STEREOZ:
+            bond_labels[bond.GetIdx()] = "Z"
+
+    cjson["bonds"]["labels"] = bond_labels
+
     return {"moleculeFormat": "cjson", "cjson": cjson}

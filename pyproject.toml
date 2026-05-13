@@ -1,6 +1,6 @@
 [project]
 name = "avogadro-rdkit"
-version = "0.2.0"
+version = "0.2.1"
 description = "RDKit-based plugins for Avogadro 2"
 authors = [{name = "Geoff Hutchison", email = "geoff.hutchison@gmail.com"}]
 license = "BSD-3-Clause"
