@@ -1,9 +1,17 @@
 {
+  "conformers": {
+    "type": "integer",
+    "label": "Conformers",
+    "default": 10,
+    "minimum": 1,
+    "maximum": 500,
+    "toolTip": "Number of ETKDG conformers to generate"
+  },
   "ff": {
     "type": "stringList",
     "label": "Force Field",
-    "default": 2,
-    "values": ["None", "MMFF94", "UFF"],
-    "toolTip": "Optional force field optimization after embedding"
+    "default": 0,
+    "values": ["MMFF94", "UFF", "None"],
+    "toolTip": "MMFF94 falls back to UFF for atoms without MMFF parameters"
   }
 }
