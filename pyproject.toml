@@ -1,6 +1,6 @@
 [project]
 name = "avogadro-rdkit"
-version = "0.2.1"
+version = "0.3.0"
 description = "RDKit-based plugins for Avogadro 2"
 authors = [{name = "Geoff Hutchison", email = "geoff.hutchison@gmail.com"}]
 license = "BSD-3-Clause"
@@ -15,7 +15,7 @@ requires = ["uv_build>=0.10.2,<0.11.0"]
 build-backend = "uv_build"
 
 [tool.avogadro]
-minimum-avogadro-version = "1.103"
+minimum-avogadro-version = "2.0"
 
 [[tool.avogadro.menu-commands]]
 identifier = "standardize"

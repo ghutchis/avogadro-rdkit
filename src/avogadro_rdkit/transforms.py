@@ -9,6 +9,8 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit.Chem.MolStandardize import rdMolStandardize
 
+from .command import report_progress
+
 
 def canon_conf(avo_input: dict) -> dict:
     """Place molecule in a canonical (standard) frame of reference."""
@@ -21,9 +23,11 @@ def canon_conf(avo_input: dict) -> dict:
 def tautomer(avo_input: dict) -> dict:
     """Convert to canonical tautomer and generate a new 3D conformer."""
     m = Chem.MolFromMolBlock(avo_input["sdf"])
+    report_progress("Enumerating tautomers")
     enumerator = rdMolStandardize.TautomerEnumerator()
     canon = enumerator.Canonicalize(m)
     m = Chem.AddHs(canon)
+    report_progress("Generating 3D coordinates")
     AllChem.EmbedMolecule(m, AllChem.ETKDGv3())
     return {"moleculeFormat": "sdf", "sdf": Chem.MolToMolBlock(m)}
 
@@ -31,8 +35,10 @@ def tautomer(avo_input: dict) -> dict:
 def standardize(avo_input: dict) -> dict:
     """Standardize molecule and generate a new 3D conformer."""
     m = Chem.MolFromMolBlock(avo_input["sdf"])
+    report_progress("Standardizing molecule")
     canon = rdMolStandardize.Normalize(m)
     m = Chem.AddHs(canon)
+    report_progress("Generating 3D coordinates")
     AllChem.EmbedMolecule(m, AllChem.ETKDGv3())
     return {"moleculeFormat": "sdf", "sdf": Chem.MolToMolBlock(m)}
 
